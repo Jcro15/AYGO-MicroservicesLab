@@ -7,7 +7,8 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RequestMapping  {
+public @interface RequestMapping {
     String path();
+
     RequestMethod method();
 }
