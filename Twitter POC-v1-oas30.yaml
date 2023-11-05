@@ -1,0 +1,229 @@
+openapi: "3.0.1"
+info:
+  title: "Twitter POC"
+  description: "Proof of concept of twitter using microservices architecture"
+  version: "2023-11-05T00:53:39Z"
+servers:
+- url: "https://7cdi34eov2.execute-api.us-east-1.amazonaws.com/{basePath}"
+  variables:
+    basePath:
+      default: "v1"
+paths:
+  /tweets:
+    get:
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTweet"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+  /tweets/{tweetId}:
+    get:
+      parameters:
+      - name: "tweetId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+    put:
+      parameters:
+      - name: "tweetId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTweet"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+    delete:
+      parameters:
+      - name: "tweetId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+  /users:
+    get:
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserModel"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+  /tweets/user/{userId}:
+    get:
+      parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+  /users/{userId}:
+    get:
+      parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+    put:
+      parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserModel"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+    delete:
+      parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+components:
+  schemas:
+    CreateTweet:
+      title: "UserModel"
+      required:
+      - "content"
+      - "userId"
+      type: "object"
+      properties:
+        userId:
+          type: "string"
+        content:
+          type: "string"
+    Empty:
+      title: "Empty Schema"
+      type: "object"
+    CreateUserModel:
+      title: "UserModel"
+      required:
+      - "email"
+      - "profileDescription"
+      - "username"
+      type: "object"
+      properties:
+        username:
+          type: "string"
+        profileDescription:
+          type: "string"
+        email:
+          type: "string"
+          format: "email"
+    UpdateTweet:
+      title: "UserModel"
+      required:
+      - "content"
+      - "userId"
+      type: "object"
+      properties:
+        content:
+          type: "string"
+        userId:
+          type: "string"
+          format: "string"
+    UpdateUserModel:
+      title: "UserModel"
+      required:
+      - "email"
+      - "profileDescription"
+      - "username"
+      type: "object"
+      properties:
+        profileDescription:
+          type: "string"
+        email:
+          type: "string"
+          format: "email"
+        username:
+          type: "string"
+          format: "string"
