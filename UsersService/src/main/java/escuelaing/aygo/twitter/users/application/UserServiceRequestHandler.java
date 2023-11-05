@@ -3,6 +3,7 @@ package escuelaing.aygo.twitter.users.application;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import escuelaing.aygo.twitter.users.domain.User;
+import escuelaing.aygo.twitter.users.domain.UserAlreadyInUseException;
 import escuelaing.aygo.twitter.users.domain.UserService;
 import escuelaing.aygo.twitter.users.domain.UserServiceException;
 import escuelaing.aygo.twitter.users.utils.RequestMapping;
@@ -38,7 +39,7 @@ public class UserServiceRequestHandler implements RequestHandler<APIGatewayProxy
                 RequestMethod routeMethod = routeAnnotation.method();
 
                 if (request.getHttpMethod().equals(routeMethod.name())) {
-                    Pattern pattern = Pattern.compile("^" + routePath.replaceAll("\\{\\w+\\}", "(.+)") + "$");
+                    Pattern pattern = Pattern.compile("^" + routePath.replaceAll("\\{\\w+\\}", "([^/]+)") + "$");
                     Matcher matcher = pattern.matcher(request.getPath());
 
                     if (matcher.matches()) {
@@ -71,7 +72,7 @@ public class UserServiceRequestHandler implements RequestHandler<APIGatewayProxy
             var user = objectMapper.readValue(request.getBody(), User.class);
             var createdUser = userService.saveUser(user);
             return buildJsonResponse(201, objectMapper.writeValueAsString(createdUser));
-        } catch (UserServiceException e) {
+        } catch (UserAlreadyInUseException e) {
             return new APIGatewayProxyResponseEvent().withStatusCode(409).withBody(e.getMessage());
         }
 
@@ -101,6 +102,21 @@ public class UserServiceRequestHandler implements RequestHandler<APIGatewayProxy
             new APIGatewayProxyResponseEvent().withStatusCode(404).withBody(e.getMessage());
         }
         return new APIGatewayProxyResponseEvent().withStatusCode(204);
+    }
+    @RequestMapping(path = "/users/{userId}", method = RequestMethod.PUT)
+    public APIGatewayProxyResponseEvent updateUser(APIGatewayProxyRequestEvent request, Context context) throws Exception {
+        try {
+            String userId = request.getPathParameters().get("userId");
+            var user = objectMapper.readValue(request.getBody(), User.class);
+            var updatedUser = userService.updateUser(userId,user);
+            return buildJsonResponse(200, objectMapper.writeValueAsString(updatedUser));
+        }
+        catch (UserServiceException e){
+            return new APIGatewayProxyResponseEvent().withStatusCode(404).withBody(e.getMessage());
+        }
+        catch (UserAlreadyInUseException e){
+            return new APIGatewayProxyResponseEvent().withStatusCode(409).withBody(e.getMessage());
+        }
     }
 
 

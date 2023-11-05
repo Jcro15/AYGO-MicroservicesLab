@@ -8,7 +8,7 @@ import escuelaing.aygo.twitter.users.application.repository.LocalDateTimeConvert
 
 import java.time.LocalDateTime;
 
-@DynamoDBTable(tableName = "users")
+@DynamoDBTable(tableName = "user")
 public class User {
     @DynamoDBHashKey(attributeName = "id")
     private String id;
@@ -61,5 +61,16 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void updateUserInformation(User user, UserRepository userRepository) throws UserServiceException {
+        if(!user.getUsername().equals(username)) {
+            if(userRepository.findByUsername(user.getUsername()).isPresent()){
+                throw new UserAlreadyInUseException("Username " + user.getUsername() + " is already registered");
+            }
+            username = user.getUsername();
+        }
+        profileDescription = user.getProfileDescription();
+        email = user.getEmail();
     }
 }

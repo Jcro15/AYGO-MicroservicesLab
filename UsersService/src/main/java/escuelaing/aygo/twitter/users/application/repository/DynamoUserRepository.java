@@ -53,7 +53,9 @@ public class DynamoUserRepository implements UserRepository {
     }
 
     @Override
-    public List<User> getAll() {
+    public List<User> getAll()
+    {
+
         return dynamoDBMapper.scan(User.class, new DynamoDBScanExpression());
     }
 }

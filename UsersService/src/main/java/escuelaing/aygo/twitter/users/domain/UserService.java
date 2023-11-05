@@ -16,7 +16,7 @@ public class UserService {
         user.setId(UUID.randomUUID().toString());
         user.setCreatedAt(LocalDateTime.now(clock));
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-            throw new UserServiceException("Username " + user.getUsername() + " is already registered");
+            throw new UserAlreadyInUseException("Username " + user.getUsername() + " is already registered");
         }
         userRepository.save(user);
         return user;
@@ -31,10 +31,16 @@ public class UserService {
     }
 
     public void deleteUserById(String userId) {
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()){
-            throw new UserServiceException("User " + userId + " not found");
-        }
-        userRepository.delete(user.get());
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->  new UserServiceException("User " + userId + " not found") );
+        userRepository.delete(user);
+    }
+
+    public User updateUser(String userId, User user) {
+        User currentUser = userRepository.findById(userId)
+                .orElseThrow(() ->  new UserServiceException("User " + userId + " not found") );
+        currentUser.updateUserInformation(user,userRepository);
+        userRepository.save(currentUser);
+        return currentUser;
     }
 }
