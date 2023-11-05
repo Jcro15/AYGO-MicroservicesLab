@@ -61,5 +61,5 @@ la siguiente URL: https://7cdi34eov2.execute-api.us-east-1.amazonaws.com/v1
 
 Para probar los endpoints desarrollados, puede utilizar el archivo [Twitter POC-v1-oas30.yaml](Twitter%20POC-v1-oas30.yaml) para
 importarlo como una especificación OpenApi V3 utilizando herramientas como postman, o puede acceder al siguiente
-[Swagger Online]([https://petstore.swagger.io/?url=https://github.com/Jcro15/AYGO-MicroservicesLab/blob/main/Twitter%20POC-v1-oas30.yaml#/default/get_users](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/Jcro15/AYGO-MicroservicesLab/main/Twitter%20POC-v1-oas30.yaml)https://petstore.swagger.io/?url=https://raw.githubusercontent.com/Jcro15/AYGO-MicroservicesLab/main/Twitter%20POC-v1-oas30.yaml), 
+[Swagger Online]([https://petstore.swagger.io/?url=https://raw.githubusercontent.com/Jcro15/AYGO-MicroservicesLab/main/Twitter%20POC-v1-oas30.yaml), 
 simplemente asegurese de desactivar las validaciones CORS del navegador para probar las peticiones
