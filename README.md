@@ -59,3 +59,7 @@ asegurar un formato de entrada válido.
 El prototipo se desplegó en AWS siguiendo la arquitectura propuesta, la API se puede consultar utilizando
 la siguiente URL: https://7cdi34eov2.execute-api.us-east-1.amazonaws.com/v1
 
+Para probar los endpoints desarrollados, puede utilizar el archivo [Twitter POC-v1-oas30.yaml](Twitter%20POC-v1-oas30.yaml) para
+importarlo como una especificación OpenApi V3 utilizando herramientas como postman, o puede acceder al siguiente
+[Swagger Online](https://petstore.swagger.io/?url=https://github.com/Jcro15/AYGO-MicroservicesLab/blob/main/Twitter%20POC-v1-oas30.yaml#/default/get_users), 
+simplemente asegurese de desactivar las validaciones CORS del navegador para probar las peticiones
